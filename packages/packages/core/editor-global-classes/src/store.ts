@@ -1,5 +1,6 @@
 import { mergeProps, type Props } from '@elementor/editor-props';
 import {
+	type CustomCss,
 	getVariantByMeta,
 	type StyleDefinition,
 	type StyleDefinitionID,
@@ -125,12 +126,46 @@ export const slice = createSlice( {
 			if ( variant ) {
 				variant.props = mergeProps( variant.props, payload.props );
 
-				if ( Object.keys( variant.props ).length === 0 ) {
+				if ( Object.keys( variant.props ).length === 0 && ! variant.customCss?.raw ) {
 					// If the props object is empty after merging, we remove the variant.
 					style.variants = style.variants.filter( ( v ) => v !== variant );
 				}
 			} else {
-				style.variants.push( { meta: payload.meta, props: payload.props } );
+				style.variants.push( { meta: payload.meta, props: payload.props, customCss: null } );
+			}
+
+			state.isDirty = true;
+		},
+
+		updateCustomCss(
+			state,
+			{
+				payload,
+			}: PayloadAction< {
+				id: StyleDefinitionID;
+				meta: StyleDefinitionVariant[ 'meta' ];
+				customCss: CustomCss | null;
+			} >
+		) {
+			const style = state.data.items[ payload.id ];
+
+			if ( ! style ) {
+				throw new GlobalClassNotFoundError( { context: { styleId: payload.id } } );
+			}
+			localHistory.next( state.data );
+
+			const variant = getVariantByMeta( style, payload.meta );
+			const customCss = payload.customCss?.raw ? payload.customCss : null;
+
+			if ( variant ) {
+				variant.customCss = customCss;
+
+				if ( Object.keys( variant.props ).length === 0 && ! variant.customCss?.raw ) {
+					// If the props object is empty after merging, we remove the variant.
+					style.variants = style.variants.filter( ( v ) => v !== variant );
+				}
+			} else {
+				style.variants.push( { meta: payload.meta, props: {}, customCss } );
 			}
 
 			state.isDirty = true;

@@ -54,12 +54,27 @@ export const documentElementsStylesProvider = createStylesProvider( {
 			if ( ! isValidElementsMeta( meta ) ) {
 				throw new InvalidElementsStyleProviderMetaError( { context: { meta } } );
 			}
-
+console.log( 'args', args );
 			updateElementStyle( {
+				...args,
 				elementId: meta.elementId,
 				styleId: args.id,
 				meta: args.meta,
 				props: args.props,
+			} );
+		},
+
+		updateCustomCss: ( args, meta = {} ) => {
+			if ( ! isValidElementsMeta( meta ) ) {
+				throw new InvalidElementsStyleProviderMetaError( { context: { meta } } );
+			}
+console.log( 'args', args );
+			updateElementStyle( {
+				...args,
+				elementId: meta.elementId,
+				styleId: args.id,
+				meta: args.meta,
+				props: {},
 			} );
 		},
 	},

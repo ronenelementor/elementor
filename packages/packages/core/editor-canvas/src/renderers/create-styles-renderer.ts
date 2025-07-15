@@ -42,7 +42,9 @@ export function createStylesRenderer( { resolve, breakpoints, selectorPrefix = '
 	return async ( { styles, signal }: StyleRendererArgs ): Promise< StyleItem[] > => {
 		const stylesCssPromises = styles.map( async ( style ) => {
 			const variantCssPromises = Object.values( style.variants ).map( async ( variant ) => {
-				const css = await propsToCss( { props: variant.props, resolve, signal } );
+				const css =
+					( await propsToCss( { props: variant.props, resolve, signal } ) ) +
+					( variant.customCss?.raw ?? '' );
 
 				return createStyleWrapper()
 					.for( style.cssName, style.type )

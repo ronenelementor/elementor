@@ -72,9 +72,20 @@ export const globalClassesStylesProvider = createStylesProvider( {
 		updateProps: ( args ) => {
 			dispatch(
 				slice.actions.updateProps( {
+					...args,
 					id: args.id,
 					meta: args.meta,
 					props: args.props,
+				} )
+			);
+		},
+		updateCustomCss: ( args ) => {
+			console.log( 'slice', slice );
+			dispatch(
+				slice.actions.updateCustomCss( {
+					id: args.id,
+					meta: args.meta,
+					customCss: args.customCss ?? null,
 				} )
 			);
 		},

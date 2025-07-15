@@ -2,6 +2,7 @@ import { type Meta, type StylesProvider } from '../types';
 
 export const createStylesRepository = () => {
 	const providers: StylesProvider[] = [];
+	console.log( 'create-styles-repository.ts', providers );
 
 	const getProviders = () => {
 		return providers.slice( 0 ).sort( ( a, b ) => ( a.priority > b.priority ? -1 : 1 ) );

@@ -1,5 +1,5 @@
 import type { Props } from '@elementor/editor-props';
-import type { StyleDefinition, StyleDefinitionID, StyleDefinitionVariant } from '@elementor/editor-styles';
+import type { CustomCss, StyleDefinition, StyleDefinitionID, StyleDefinitionVariant } from "@elementor/editor-styles";
 
 type MakeOptional< T, K extends keyof T > = Omit< T, K > & Partial< T >;
 
@@ -18,6 +18,13 @@ export type UpdatePropsActionPayload = {
 	id: StyleDefinitionID;
 	meta: StyleDefinitionVariant[ 'meta' ];
 	props: Props;
+	customCss?: CustomCss | null;
+};
+
+export type UpdateCustomCssActionPayload = {
+	id: StyleDefinitionID;
+	meta: StyleDefinitionVariant[ 'meta' ];
+	customCss: CustomCss | null;
 };
 
 export type StylesProvider = {
@@ -37,6 +44,7 @@ export type StylesProvider = {
 		delete?: ( id: StyleDefinitionID ) => void;
 		update?: ( data: UpdateActionPayload ) => void;
 		updateProps?: ( args: UpdatePropsActionPayload, meta?: Meta ) => void;
+		updateCustomCss?: ( args: UpdateCustomCssActionPayload, meta?: Meta ) => void;
 	};
 	capabilities?: UserCapabilities;
 };

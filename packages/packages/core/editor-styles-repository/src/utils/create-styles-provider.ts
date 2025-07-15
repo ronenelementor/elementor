@@ -17,6 +17,7 @@ export type CreateStylesProviderOptions = {
 		delete?: StylesProvider[ 'actions' ][ 'delete' ];
 		update?: StylesProvider[ 'actions' ][ 'update' ];
 		updateProps?: StylesProvider[ 'actions' ][ 'updateProps' ];
+		updateCustomCss?: StylesProvider[ 'actions' ][ 'updateCustomCss' ];
 	};
 	capabilities?: UserCapabilities;
 };
@@ -33,6 +34,7 @@ export function createStylesProvider( {
 	actions,
 	capabilities,
 }: CreateStylesProviderOptions ): StylesProvider {
+	console.log( 'actions', actions );
 	return {
 		getKey: typeof key === 'string' ? () => key : key,
 		priority,
@@ -51,6 +53,7 @@ export function createStylesProvider( {
 			delete: actions.delete,
 			update: actions.update,
 			updateProps: actions.updateProps,
+			updateCustomCss: actions.updateCustomCss,
 		},
 	};
 }

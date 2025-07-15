@@ -13,12 +13,17 @@ export type StyleDefinitionState =
 	| 'hidden'
 	| 'visible';
 
+export type CustomCss = {
+	raw: string;
+};
+
 export type StyleDefinitionVariant = {
 	meta: {
 		breakpoint: null | BreakpointId;
 		state: StyleDefinitionState;
 	};
 	props: Props;
+	customCss: CustomCss | null;
 };
 
 export type StyleDefinitionType = 'class';
