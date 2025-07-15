@@ -14,6 +14,7 @@ import { StyleProvider } from '../contexts/style-context';
 import { StyleInheritanceProvider } from '../contexts/styles-inheritance-context';
 import { useActiveStyleDefId } from '../hooks/use-active-style-def-id';
 import { CssClassSelector } from './css-classes/css-class-selector';
+import { CustomCss } from './custom-css';
 import { SectionsList } from './sections-list';
 import { BackgroundSection } from './style-sections/background-section/background-section';
 import { BorderSection } from './style-sections/border-section/border-section';
@@ -154,6 +155,14 @@ export const StyleTab = () => {
 									component: EffectsSection,
 									name: 'Effects',
 									title: __( 'Effects', 'elementor' ),
+								} }
+								fields={ [ 'box-shadow', 'opacity', 'transform', 'filter', 'backdrop-filter' ] }
+							/>
+							<StyleTabSection
+								section={ {
+									component: CustomCss,
+									name: 'Custom CSS',
+									title: __( 'Custom CSS', 'elementor' ),
 								} }
 								fields={ [ 'box-shadow', 'opacity', 'transform', 'filter', 'backdrop-filter' ] }
 							/>

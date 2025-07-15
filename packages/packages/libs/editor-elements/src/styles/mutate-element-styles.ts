@@ -36,6 +36,7 @@ export function mutateElementStyles( elementId: ElementID, mutator: Mutator ) {
 
 function mutateStyles( container: V1Element, mutator: Mutator ) {
 	const styles: StyleDefinitionsMap = structuredClone( container.model.get( 'styles' ) ) ?? {};
+	console.log( 'mutate-element-styles.ts' );
 
 	const entries = Object.entries( mutator( styles ) )
 		.map( ( [ styleId, style ] ) => {
@@ -55,7 +56,7 @@ function mutateStyles( container: V1Element, mutator: Mutator ) {
 }
 
 function removeEmptyVariants( style: StyleDefinition ) {
-	return style.variants.filter( ( { props } ) => Object.keys( props ).length > 0 );
+	return style.variants.filter( ( { props, customCss } ) => Object.keys( props ).length > 0 || customCss?.raw );
 }
 
 function isStyleEmpty( style: StyleDefinition ) {

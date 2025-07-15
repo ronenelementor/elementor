@@ -10,6 +10,7 @@ export type UpdateElementStyleArgs = {
 	styleId: StyleDefinition[ 'id' ];
 	meta: StyleDefinitionVariant[ 'meta' ];
 	props: StyleDefinitionVariant[ 'props' ];
+	customCss?: StyleDefinitionVariant[ 'customCss' ];
 };
 
 export function updateElementStyle( args: UpdateElementStyleArgs ) {
@@ -21,11 +22,13 @@ export function updateElementStyle( args: UpdateElementStyleArgs ) {
 		}
 
 		const variant = getVariantByMeta( style, args.meta );
+		const newCustomCss = 'customCss' in args ? args.customCss ?? null : variant?.customCss ?? null;
 
 		if ( variant ) {
 			variant.props = mergeProps( variant.props, args.props );
+			variant.customCss = newCustomCss;
 		} else {
-			style.variants.push( { meta: args.meta, props: args.props } );
+			style.variants.push( { meta: args.meta, props: args.props, customCss: newCustomCss } );
 		}
 
 		return styles;
